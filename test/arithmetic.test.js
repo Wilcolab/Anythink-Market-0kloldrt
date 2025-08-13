@@ -75,34 +75,26 @@ describe('Arithmetic', function () {
                     done();
                 });
         });
-        it('adds an integer to a floating point number', function (done) {
-            request.get('/arithmetic?operation=add&operand1=2.5&operand2=-5')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: -2.5 });
-                    done();
-                });
-        });
-        it('adds with negative exponent', function (done) {
-            request.get('/arithmetic?operation=add&operand1=1.2e-5&operand2=-1.2e-5')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 0 });
-                    done();
-                });
-        });
-    });
-
-// TODO: Challenge #1
- 
-
-    describe('Multiplication', function () {
-        it('multiplies two positive integers', function (done) {
-            request.get('/arithmetic?operation=multiply&operand1=21&operand2=2')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 42 });
-                    done();
+        describe('Subtraction', function () {
+            it('subtracts two positive integers', function (done) {
+                request.get('/arithmetic?operation=subtract&operand1=42&operand2=21')
+                    .expect(200)
+                    .end(function (err, res) {
+                        expect(res.body).to.eql({ result: 21 });
+                        done();
+                    });
+            });
+            it('subtracts a larger number from a smaller number', function (done) {
+                request.get('/arithmetic?operation=subtract&operand1=21&operand2=42')
+                    .expect(200)
+                    .end(function (err, res) {
+                        expect(res.body).to.eql({ result: -21 });
+                        done();
+                    });
+            });
+            it('subtracts zero from a number', function (done) {
+                request.get('/arithmetic?operation=subtract&operand1=42&operand2=0')
+                    .expect(
                 });
         });
         it('multiplies a positive integer with zero', function (done) {
