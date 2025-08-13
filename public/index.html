@@ -1,9 +1,49 @@
-<html>
+<!--
+  index.html - Calculator Web Application
+
+  This HTML file defines the structure for a scientific calculator web application.
+  It includes the following main components:
+
+  - Head Section:
+    - Sets character encoding, page title, links to stylesheet and favicon, and viewport settings for responsiveness.
+
+  - Body Section:
+    - Initializes the calculator display on load.
+    - Contains a main container with:
+      - Result display area for showing current calculation or result.
+      - Hidden loading indicator.
+      - Calculator interface with buttons for:
+        - Memory operations (MC, MR, M+, M-)
+        - History display (H)
+        - Clear and backspace (C, CE, ⌫)
+        - Plus/minus toggle (±)
+        - Numeric input (0-9)
+        - Decimal point (.)
+        - Arithmetic operations (+, -, *, /, %, ^)
+        - Parentheses for grouping ((, ))
+        - Scientific functions (sin, cos, tan, log, ln, √, 1/x)
+        - Equals for calculation (=)
+      - History panel for displaying previous calculations (initially hidden).
+
+  - Script:
+    - Loads client-side JavaScript logic from "client.js".
+
+  Accessibility:
+    - All buttons include appropriate ARIA labels for screen readers.
+
+  File Location:
+    - /workspaces/Anythink-Market-0kloldrt/public/index.html
+-->
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Calculator</title>
-    <link rel="stylesheet" href="default.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <script src="client.js"></script>
+    <link rel="stylesheet" href="default.css" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
   </head>
   <body onLoad="setValue(0)">
     <div class="container">
@@ -11,39 +51,318 @@
         <div id="result"><span class="digit0">0</span></div>
       </div>
 
-      <div id="loading" style="visibility:hidden"></div>
+      <div id="loading" style="visibility: hidden"></div>
 
       <div class="box">
         <div class="calculator">
           <div class="calculator-buttons">
-            <button class="btn span-2"></button>
-            <button class="btn" onClick="clearPressed()">C</button>
-            <button class="btn" onClick="clearPressed()">CE</button>
+            <!-- Memory and history row -->
+            <button
+              class="btn"
+              type="button"
+              onClick="memoryClear()"
+              aria-label="Memory Clear"
+            >
+              MC
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="memoryRecall()"
+              aria-label="Memory Recall"
+            >
+              MR
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="memoryAdd()"
+              aria-label="Memory Add"
+            >
+              M+
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="memorySubtract()"
+              aria-label="Memory Subtract"
+            >
+              M-
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="showHistory()"
+              aria-label="Show History"
+            >
+              H
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="clearPressed()"
+              aria-label="Clear"
+            >
+              C
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="clearPressed()"
+              aria-label="Clear Entry"
+            >
+              CE
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="backspacePressed()"
+              aria-label="Backspace"
+            >
+              ⌫
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="plusMinusPressed()"
+              aria-label="Plus Minus"
+            >
+              ±
+            </button>
 
-            <button class="btn" onClick="numberPressed(7)">7</button>
-            <button class="btn" onClick="numberPressed(8)">8</button>
-            <button class="btn" onClick="numberPressed(9)">9</button>
-            <button class="btn" onClick="operationPressed('/')">&divide;</button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(7)"
+              aria-label="7"
+            >
+              7
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(8)"
+              aria-label="8"
+            >
+              8
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(9)"
+              aria-label="9"
+            >
+              9
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('/')"
+              aria-label="Divide"
+            >
+              &divide;
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('%')"
+              aria-label="Percent"
+            >
+              %
+            </button>
 
-            <button class="btn" onClick="numberPressed(4)">4</button>
-            <button class="btn" onClick="numberPressed(5)">5</button>
-            <button class="btn" onClick="numberPressed(6)">6</button>
-            <button class="btn" onClick="operationPressed('*')">x</button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(4)"
+              aria-label="4"
+            >
+              4
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(5)"
+              aria-label="5"
+            >
+              5
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(6)"
+              aria-label="6"
+            >
+              6
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('*')"
+              aria-label="Multiply"
+            >
+              x
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="sqrtPressed()"
+              aria-label="Square Root"
+            >
+              √
+            </button>
 
-            <button class="btn" onClick="numberPressed(1)">1</button>
-            <button class="btn" onClick="numberPressed(2)">2</button>
-            <button class="btn" onClick="numberPressed(3)">3</button>
-            <button class="btn" onClick="operationPressed('-')">-</button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(1)"
+              aria-label="1"
+            >
+              1
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(2)"
+              aria-label="2"
+            >
+              2
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(3)"
+              aria-label="3"
+            >
+              3
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('-')"
+              aria-label="Subtract"
+            >
+              -
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="reciprocalPressed()"
+              aria-label="Reciprocal"
+            >
+              1/x
+            </button>
 
-            <button class="btn" onClick="numberPressed(0)">0</button>
-            <button class="btn" onClick="decimalPressed()">.</button>
-            <button class="btn" onClick="operationPressed('+')">+</button>
-            <button class="btn" onClick="equalPressed()">=</button>
-
-            <!-- TODO: Buttons -->
+            <button
+              class="btn"
+              type="button"
+              onClick="numberPressed(0)"
+              aria-label="0"
+            >
+              0
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="decimalPressed()"
+              aria-label="Decimal"
+            >
+              .
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('+')"
+              aria-label="Add"
+            >
+              +
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="equalPressed()"
+              aria-label="Equals"
+            >
+              =
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('(')"
+              aria-label="Left Parenthesis"
+            >
+              (
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed(')')"
+              aria-label="Right Parenthesis"
+            >
+              )
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="operationPressed('^')"
+              aria-label="Power"
+            >
+              ^
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="scientificPressed('sin')"
+              aria-label="Sine"
+            >
+              sin
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="scientificPressed('cos')"
+              aria-label="Cosine"
+            >
+              cos
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="scientificPressed('tan')"
+              aria-label="Tangent"
+            >
+              tan
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="scientificPressed('log')"
+              aria-label="Logarithm"
+            >
+              log
+            </button>
+            <button
+              class="btn"
+              type="button"
+              onClick="scientificPressed('ln')"
+              aria-label="Natural Logarithm"
+            <!--
+              This is the main HTML file for the Anythink Market project.
+              It serves as the entry point for the web application and is located at:
+              /workspaces/Anythink-Market-0kloldrt/public/index.html
+            -->
+            >
+              ln
+            </button>
+            <!-- History panel -->
+            <div id="history-panel" style="display: none">
+              <h3>History</h3>
+              <ul id="history-list"></ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <script src="client.js"></script>
   </body>
 </html>
